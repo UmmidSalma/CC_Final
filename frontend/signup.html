@@ -122,7 +122,7 @@ function signup() {
         messageEl.classList.add("error");
         return;
     }
-fetch("https://my-backend.onrender.com/signup", {
+fetch("https://cc-final.onrender.com/signup", {
     method: "POST",
     headers: { "Content-Type": "application/json" },
     body: JSON.stringify({ name, email, password })

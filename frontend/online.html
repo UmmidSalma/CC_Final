@@ -552,7 +552,7 @@ async function placeOrder(){
   };
 
 try {
-    const resp = await fetch('https://my-backend.onrender.com/order', { // replaced localhost with deployed URL
+    const resp = await fetch('https://cc-final.onrender.com/order', { // replaced localhost with deployed URL
         method: 'POST',
         headers: {'Content-Type':'application/json'},
         body: JSON.stringify(orderPayload)
@@ -631,7 +631,7 @@ async function checkoutCart(){
     };
 
     try {
-    await fetch('https://my-backend.onrender.com/order', { // replaced localhost with deployed URL
+    await fetch('https://cc-final.onrender.com/order', { // replaced localhost with deployed URL
         method: 'POST',
         headers: {'Content-Type':'application/json'},
         body: JSON.stringify(payload)

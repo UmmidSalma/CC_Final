@@ -1,0 +1,170 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>About Us | Forever Frost by Pratibha M.P</title>
+<style>
+/* BASE STYLES */
+* { box-sizing: border-box; margin: 0; padding: 0; }
+body { 
+  font-family: "Times New Roman", serif; 
+  background-color: #fff; 
+  color: #333; 
+  line-height: 1.6; 
+  scroll-behavior: smooth; 
+}
+.container { width: 100%; max-width: 1400px; margin: 0 auto; padding: 0 1cm; }
+
+/* HEADER */
+header { 
+  position: fixed; 
+  top: 0; 
+  left: 50%; 
+  transform: translateX(-50%); 
+  width: 100%; 
+  max-width: 1400px; 
+  background-color: #fff; 
+  display: flex; 
+  justify-content: space-between; 
+  align-items: center; 
+  padding: 20px 1cm; 
+  border-bottom: 1px solid #eee; 
+  z-index: 1000; 
+}
+.logo { display: flex; align-items: center; gap: 20px; }
+.logo-box { background-color: #d4b2b2; color: white; font-size: 56px; padding: 10px 25px; font-weight: bold; }
+.logo-text { font-size: 22px; font-weight: bold; line-height: 1.4; }
+nav { display: flex; gap: 25px; }
+nav a { text-decoration: none; color: #000; font-size: 18px; font-weight: 600; letter-spacing: 0.5px; }
+nav a:hover { color: #d4b2b2; }
+
+/* MAIN CONTENT */
+.main-content { margin-top: 140px; }
+
+/* HERO */
+.hero { background: url('../images/cake1.avif') center/cover no-repeat; height: 85vh; border-radius: 6px; margin-bottom: 1cm; }
+
+/* ABOUT SECTION */
+.about-section {
+  display: flex;
+  gap: 1.5cm;
+  background-color: #f7eaea;
+  border-radius: 8px;
+  padding: 1.5cm;
+  align-items: center;
+  margin: 1cm 0;
+}
+
+.about-text {
+  flex: 1.2;
+}
+
+.about-text h2 {
+  font-size: 40px;
+  margin-bottom: 15px;
+  color: #b87b7b;
+}
+
+.about-text p {
+  font-size: 19px;
+  line-height: 1.7;
+  text-align: justify;
+}
+
+.about-image {
+  flex: 0.8;
+  border-radius: 8px;
+  overflow: hidden;
+}
+
+.about-image img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  border-radius: 8px;
+}
+
+/* RESPONSIVE */
+@media (max-width: 900px) {
+  .about-section {
+    flex-direction: column;
+    text-align: center;
+  }
+  .about-text, .about-image {
+    flex: 1;
+  }
+  .about-text h2 { font-size: 34px; }
+}
+.baker-text h2 {
+  font-size: 15px;
+  color: #b87b7b;
+  font-weight: 3000;
+  font-family: "Georgia", serif;
+  margin-bottom: 10px;
+  text-transform: capitalize;
+}
+.intro-text { flex: 2; background-color: #f7eaea; padding: 1cm; display: flex; flex-direction: column; justify-content: center; border-radius: 6px; }
+</style>
+</head>
+<body>
+
+<header>
+  <div class="logo">
+    <div class="logo-box">2F</div>
+    <div class="logo-text">
+      <strong>Forever Frost</strong><br>
+      By Ummid & Pratibha
+    </div>
+  </div>
+ <nav>
+    <a href="index.html">Home</a>
+    <a href="about.html">About</a>
+    <a href="ourcakes.html">Our Cakes</a>
+    <a href="online.html">Order Online</a>
+    <a onclick="showCart()">Cart (<span id="cartCount">0</span>)</a>
+    <a href="login.html">Log In</a>
+  </nav>
+</header>
+
+<div class="container main-content">
+
+  <!-- About Section -->
+  <section class="about-section">
+    <div class="about-text">
+        <h3>Where Passion Meets Perfection</h3>
+      <h2>— Chef Ayaan Malik</h2>
+     <p>
+      <strong>Chef Ayaan Malik</strong>, the heart behind <em>Forever Frost</em>, is a renowned cake artist with over 
+      a decade of experience in crafting luxurious wedding confections. Born and raised in Hyderabad, 
+      Ayaan’s journey began in his family’s small bakery, where his love for delicate flavors and intricate 
+      detailing first took shape. 
+    </p>
+    <p>
+      After honing his skills at international pastry institutes, he returned home with a mission — 
+      to create cakes that not only taste divine but also reflect the emotions of life’s most memorable moments. 
+      His signature style blends classic European techniques with subtle Indian inspirations, 
+      turning every creation into a piece of edible art.
+    </p>
+    <p>
+      For Chef Ayaan, baking is more than a profession — it’s poetry in sugar, frosting, and love.
+    </p>
+    </div>
+    <div class="about-image">
+      <img src="../images/che.png" alt="About Forever Frost">
+    </div>
+  </section>
+
+<section>
+</break>
+<div class="intro-text">
+  <footer>
+    © 2025 Forever Frost Cakes by Pratibha M.P | Designed with ❤️
+  </footer>
+</div>
+</section>
+
+
+
+</body>
+</html>

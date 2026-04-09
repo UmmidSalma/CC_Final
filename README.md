@@ -65,13 +65,6 @@ CC_Final-main/
 - **online.html** - Order placement interface
 - **about.html** - Company information
 
-**Assets:**
-- 4 cake product images in AVIF format
-  - Chocolate Truffle
-  - Strawberry Delight
-  - Cake 1
-  - Cake 2
-
 ## 🏗️ Technology Stack
 
 - **Backend:** Node.js, Express.js

@@ -71,12 +71,6 @@ CC_Final-main/
 
 ![Frontend Screenshot 2](2.jpeg)
 
-**Assets:**
-- 4 cake product images in AVIF format
-  - Chocolate Truffle
-  - Strawberry Delight
-  - Cake 1
-  - Cake 2
 
 ## 🏗️ Technology Stack
 

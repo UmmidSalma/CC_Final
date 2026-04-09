@@ -1,180 +1,95 @@
 # 🎂 Foreverfrost Cake Shop
 
-A full-stack web application for an online cake ordering system with user authentication and order management.
-
-## 📋 Overview
-
-Foreverfrost is an e-commerce platform that allows customers to:
-- Create accounts and authenticate securely
-- Browse and order custom cakes
-- Choose between delivery and pickup options
-- Manage special requests for their orders
-
-## 🛠️ Tech Stack
-
-**Backend:**
-- Node.js & Express.js
-- MongoDB Atlas (Cloud Database)
-- Bcrypt (Password Hashing)
-- JWT (JSON Web Tokens)
-- CORS support
-
-**Frontend:**
-- HTML5
-- CSS3
-- Vanilla JavaScript
-
-**Development & Testing:**
-- Jest / Testing framework
+Foreverfrost is a full-stack web application for an online cake ordering system with user authentication and order management.
 
 ## 📁 Project Structure
 
 ```
 CC_Final-main/
-├── frontend/              # Frontend HTML pages
-│   ├── index.html        # Home page
-│   ├── login.html        # User login
-│   ├── signup.html       # User registration
-│   ├── ourcakes.html     # Cake catalog
-│   ├── online.html       # Online ordering
-│   ├── about.html        # About us
-│   └── ...
-├── models/               # Database schemas
-│   ├── User.js          # User model
-│   └── Order.js         # Order model
-├── images/              # Cake images
+├── frontend/                      # Frontend HTML pages
+│   ├── index.html                # Home page
+│   ├── login.html                # User login interface
+│   ├── signup.html               # User registration interface
+│   ├── ourcakes.html             # Cake catalog page
+│   ├── online.html               # Online ordering interface
+│   └── about.html                # About page
+├── images/                        # Cake product images
 │   ├── cake1.avif
 │   ├── cake2.avif
-│   └── ...
-├── server.js            # Express server setup
-├── test.js              # Test suite
-├── package.json         # Dependencies
-└── README.md           # This file
+│   ├── Chocolate Truffle.avif
+│   └── Strawberry Delight.avif
+├── models/                        # MongoDB database models
+│   ├── User.js                   # User schema for authentication
+│   └── Order.js                  # Order schema for cake orders
+├── server.js                      # Express backend server
+├── test.js                        # Test suite
+├── package.json                   # Project dependencies
+└── README.md                      # This file
 ```
 
-## 🚀 Getting Started
+## 🌐 Backend Features
 
-### Prerequisites
-- Node.js (v14 or higher)
-- npm or yarn
-- MongoDB Atlas account
-
-### Installation
-
-1. **Clone the repository:**
-   ```bash
-   git clone <repository-url>
-   cd CC_Final-main
-   ```
-
-2. **Install dependencies:**
-   ```bash
-   npm install
-   ```
-
-3. **Configure environment variables:**
-   Create a `.env` file in the root directory:
-   ```
-   MONGO_URI=mongodb+srv://<username>:<password>@cluster0.kl7rl8q.mongodb.net/usersdb?retryWrites=true&w=majority
-   PORT=5000
-   ```
-
-4. **Start the server:**
-   ```bash
-   npm start
-   ```
-   or
-   ```bash
-   node server.js
-   ```
-
-The application will be available at `http://localhost:5000`
-
-## 📡 API Endpoints
-
-### Authentication
-- **POST** `/signup` - Register a new user
-  - Body: `{ name, email, password }`
-  
-- **POST** `/login` - User login
-  - Body: `{ email, password }`
-
-### Orders
-- **POST** `/order` - Create a new order
-  - Body: `{ cakeName, cakeType, weight, quantity, specialReq, orderType, pickupDate, pickupTime, deliveryAddress, price }`
-  - `orderType`: "pickup" or "delivery"
-
-## 🎂 Available Cakes
-
-- Chocolate Truffle
-- Strawberry Delight
-- Classic Cake 1
-- Classic Cake 2
-
-## 🔐 Security Features
-
-- Password hashing with bcryptjs
-- User email verification to prevent duplicates
+**Express Server (server.js):**
+- RESTful API for signup, login, and orders
+- Static file serving for frontend and images
 - CORS enabled for cross-origin requests
-- Input validation on all endpoints
+- Body parser middleware for JSON data
+- Error handling and validation
 
-## 👤 User Authentication
+**User Authentication:**
+- Signup endpoint to create new user accounts
+- Email validation to prevent duplicates
+- Password hashing using bcryptjs
+- Login endpoint for user authentication
 
-New users must:
-1. Sign up with name, email, and password
-2. Password is hashed using bcrypt (10 salt rounds)
-3. Login with registered email and password
+**Order Management:**
+- Order creation with cake details (name, type, weight, quantity)
+- Support for special requests/customizations
+- Two order types: delivery and pickup
+- Delivery orders capture address
+- Pickup orders capture date and time
+- Automatic cost calculation: quantity × weight × price
 
-## 🛒 Ordering System
+**Database:**
+- MongoDB Atlas integration
+- User collection for storing user credentials
+- Order collection for storing customer orders
 
-Customers can:
-- Select cake type and weight
-- Specify quantity
-- Add special requests or customizations
-- Choose delivery or pickup
-- For pickup: Select date and time
-- For delivery: Provide delivery address
-- System calculates total cost: `quantity × weight × price`
+## 🎨 Frontend Components
 
-## 🧪 Testing
+**Pages:**
+- **index.html** - Home/landing page
+- **login.html** - User login form
+- **signup.html** - User registration form
+- **ourcakes.html** - Displays available cake products
+- **online.html** - Order placement interface
+- **about.html** - Company information
 
-Run the test suite:
-```bash
-npm test
-```
+**Assets:**
+- 4 cake product images in AVIF format
+  - Chocolate Truffle
+  - Strawberry Delight
+  - Cake 1
+  - Cake 2
 
-## 📝 Environment Configuration
+## 🏗️ Technology Stack
 
-| Variable | Default | Description |
-|----------|---------|-------------|
-| `MONGO_URI` | MongoDB Atlas URI | Database connection string |
-| `PORT` | 5000 | Server port number |
+- **Backend:** Node.js, Express.js
+- **Database:** MongoDB Atlas (Cloud)
+- **Authentication:** Bcryptjs password hashing
+- **Middleware:** CORS, body-parser, express middleware
+- **Frontend:** HTML5, CSS3, Vanilla JavaScript
+- **Testing:** Test suite in test.js
 
-## 🐛 Troubleshooting
+## 📝 Dependencies Included
 
-**MongoDB Connection Error:**
-- Verify MONGO_URI in `.env` file
-- Ensure MongoDB Atlas IP whitelist includes your IP
-
-**Port Already in Use:**
-- Change PORT in `.env` to an available port
-- Or kill the process using port 5000
-
-## 🚢 Deployment
-
-For production deployment:
-1. Set environment variables on your hosting platform
-2. Update CORS origin to match your domain
-3. Use a secure password for MongoDB
-4. Enable HTTPS
-
-## 📄 License
-
-This project is part of the Foreverfrost Cake Shop business.
-
-## 👨‍💻 Authors
-Ummid Salma Mulla & Pratibha M Patil
-Developed as a full-stack cake shop ordering system.
+- express (4.18) - Web framework
+- mongoose - MongoDB ODM
+- bcryptjs - Password encryption
+- cors - Cross-origin support
+- jsonwebtoken - JWT support
+- body-parser - Request parsing
+- path - File path utilities
 
 ---
 

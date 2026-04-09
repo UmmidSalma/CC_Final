@@ -173,7 +173,7 @@ For production deployment:
 This project is part of the Foreverfrost Cake Shop business.
 
 ## 👨‍💻 Authors
-
+Ummid Salma Mulla & Pratibha M Patil
 Developed as a full-stack cake shop ordering system.
 
 ---

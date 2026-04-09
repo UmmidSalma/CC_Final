@@ -67,9 +67,9 @@ CC_Final-main/
 
 **Frontend Screenshots:**
 
-![Frontend Screenshot 1](images/1.jpg)
+![Frontend Screenshot 1](1.jpeg)
 
-![Frontend Screenshot 2](images/2.jpg)
+![Frontend Screenshot 2](2.jpeg)
 
 **Assets:**
 - 4 cake product images in AVIF format

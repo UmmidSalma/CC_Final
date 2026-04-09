@@ -1,0 +1,668 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width,initial-scale=1" />
+<title>Forever Frost | Order Online</title>
+<style>
+/* ===== BASE ===== */
+* { box-sizing: border-box; margin: 0; padding: 0; }
+body { font-family: "Times New Roman", serif; background-color: #fff; color: #333; line-height: 1.6; }
+.container { width: 100%; max-width: 1400px; margin: 0 auto; padding: 0 1cm; }
+
+/* HEADER */
+header { position: fixed; top: 0; left: 50%; transform: translateX(-50%); width: 100%; max-width: 1400px; background-color: #fff; display: flex; justify-content: space-between; align-items: center; padding: 20px 1cm; border-bottom: 1px solid #eee; z-index: 1000; }
+.logo { display: flex; align-items: center; gap: 20px; }
+.logo-box { background-color: #d4b2b2; color: white; font-size: 56px; padding: 10px 25px; font-weight: bold; }
+.logo-text { font-size: 22px; font-weight: bold; line-height: 1.4; }
+nav { display: flex; gap: 25px; }
+nav a { text-decoration: none; color: #000; font-size: 18px; font-weight: 600; letter-spacing: 0.5px; }
+nav a:hover { color: #d4b2b2; }
+
+/* ===== MAIN ===== */
+.main-content { margin-top: 150px; }
+
+/* ===== ORDER BAR ===== */
+.order-bar { border: 1px solid #eee; background-color: #faf8f8; padding: 25px; border-radius: 10px; margin-bottom: 40px; }
+.order-status { display: flex; align-items: center; gap: 10px; color: #2d8a39; font-weight: 600; margin-bottom: 20px; }
+.status-dot { width: 10px; height: 10px; background-color: #2d8a39; border-radius: 50%; }
+.order-options { display: flex; flex-wrap: wrap; gap: 12px; align-items: center; }
+.order-options button { padding: 8px 18px; border: 1px solid #ccc; background-color: #fff; border-radius: 6px; font-size: 15px; cursor: pointer; transition: all 0.18s ease; }
+.order-options button.active { background-color: #f4a6a6; color: #fff; border: none; box-shadow: 0 4px 12px rgba(244,166,166,0.18); }
+
+/* ===== CAKE MENU ===== */
+.cake-menu { display: grid; grid-template-columns: repeat(auto-fill, minmax(260px, 1fr)); gap: 20px; }
+.cake-card { border: 1px solid #eee; border-radius: 10px; overflow: hidden; background-color: #fff; transition: all 0.24s ease; cursor: default; box-shadow: 0 2px 10px rgba(0,0,0,0.04); display:flex; flex-direction:column; }
+.cake-card:hover { transform: translateY(-6px); box-shadow: 0 10px 30px rgba(0,0,0,0.06); }
+.cake-card img { width: 100%; height: 220px; object-fit: cover; display:block; }
+.cake-info { padding: 12px 14px; flex:1; }
+.cake-info h3 { color: #b87b7b; font-size: 18px; margin-bottom: 6px; }
+.cake-info p { color: #555; font-size: 14px; margin-bottom: 8px; }
+.price { font-weight: bold; color: #111; font-size:16px; }
+.card-buttons { display: flex; gap: 10px; padding: 12px 14px; }
+.card-buttons button { flex:1; padding: 10px 8px; border-radius: 8px; border:none; font-weight:700; cursor:pointer; transition:transform 0.12s ease; }
+.card-buttons button:active{ transform: translateY(1px); }
+.buy-btn { background: linear-gradient(180deg,#ffdfe1,#f4a6a6); color:#fff; box-shadow: 0 6px 14px rgba(244,166,166,0.18); }
+.cart-btn { background: linear-gradient(180deg,#f0f0f0,#dcdcdc); color:#333; }
+
+/* ===== MODAL ===== */
+.modal { display: none; position: fixed; z-index: 2200; left: 0; top: 0; width: 100%; height: 100%; background-color: rgba(0,0,0,0.45); justify-content: center; align-items: center; padding: 20px; }
+.modal-content { background-color: #fff; padding: 22px; border-radius: 12px; width: 520px; max-width: 100%; position: relative; box-shadow: 0 18px 40px rgba(0,0,0,0.25); }
+.close { position: absolute; top: 12px; right: 14px; font-size: 24px; cursor: pointer; color: #b87b7b; }
+.modal-content h3 { color: #b87b7b; font-size: 22px; margin-bottom: 10px; }
+.modal-row { display:flex; gap:10px; align-items:center; margin-top:8px; }
+.modal-content label { display:block; margin-top:10px; font-weight:600; }
+.modal-content select, .modal-content input, .modal-content textarea { width: 100%; padding: 10px; border-radius: 8px; border: 1px solid #ddd; margin-top: 8px; font-size: 15px; }
+.modal-action { display:flex; gap:10px; margin-top:12px; justify-content:flex-end; }
+.small-choose { display:flex; gap:10px; margin-top:8px; }
+
+/* ===== CART PAGE ===== */
+#cartPage { display:none; padding: 2cm 1cm; max-width:1400px; margin:0 auto; box-sizing:border-box; }
+.cart-item { display:flex; align-items:flex-start; gap:18px; margin-bottom:22px; border-bottom:1px solid #eee; padding-bottom:16px; }
+.cart-item img { width:160px; height:140px; object-fit:cover; border-radius:10px; }
+.cart-item-details { flex:1; }
+.cart-item-details h4 { margin-bottom:8px; font-size:20px; color:#b87b7b; }
+.cart-item-details p { margin-bottom:6px; font-size:15px; color:#555; }
+.cart-controls { margin-top:8px; display:flex; gap:8px; align-items:center; }
+.remove-btn, .buy-cart-btn { background: linear-gradient(180deg,#ffdfe1,#f4a6a6); color: #fff; border:none; padding:8px 12px; border-radius:8px; cursor:pointer; font-weight:700; }
+.remove-btn.secondary { background: linear-gradient(180deg,#efefef,#d9d9d9); color:#333; font-weight:700; }
+.qty-input { width:68px; padding:8px; border-radius:8px; border:1px solid #ddd; text-align:center; }
+
+/* cart footer */
+.cart-footer { margin-top: 20px; display: flex; justify-content: space-between; align-items: center; font-size: 18px; gap:16px; flex-wrap:wrap; }
+.cart-footer .checkout-btn { padding: 10px 18px; background: linear-gradient(180deg,#ffdfe1,#f4a6a6); color:#fff; border:none; border-radius:8px; cursor:pointer; font-weight:700; }
+
+/* ===== FOOTER (soft warm pastel pink) ===== */
+.footer-wrap { display:flex; justify-content:center; margin-top:40px; }
+footer { width: 90%; /* not full edge-to-edge, but wider */ 
+         background-color: #F7C8D0; color: #333; text-align: center; padding: 26px 1cm; margin-top: 0; max-width:1400px; border-radius:12px; box-shadow: 0 8px 28px rgba(247,200,208,0.12); margin-left:auto; margin-right:auto; }
+
+/* small responsive tweaks */
+@media (max-width:720px){
+  .cake-card img{height:180px}
+  .cart-item{flex-direction:column; align-items:center}
+  .cart-item img{width:96%;height:200px}
+  .card-buttons{flex-direction:column}
+}
+</style>
+</head>
+<body>
+
+<header>
+  <div class="logo">
+    <div class="logo-box">2F</div>
+    <div class="logo-text"><strong>Forever Frost</strong><br>By Ummid & Pratibha</div>
+  </div>
+<nav>
+    <a href="index.html">Home</a>
+    <a href="about.html">About</a>
+    <a href="ourcakes.html">Our Cakes</a>
+    <a href="online.html">Order Online</a>
+    <a onclick="showCart()">Cart (<span id="cartCount">0</span>)</a>
+    <a href="login.html">Log In</a>
+  </nav>
+</header>
+
+<div class="container main-content">
+
+  <!-- ORDER BAR -->
+  <div class="order-bar">
+    <div class="order-status"><div class="status-dot"></div> Accepting Orders</div>
+
+    <div class="order-options">
+      <button id="pickupBtn" class="" onclick="selectOrderType('pickup')">Pickup</button>
+      <button id="deliveryBtn" class="" onclick="selectOrderType('delivery')">Delivery (+₹80)</button>
+    </div>
+
+    <div class="order-details" id="orderChoiceHint" style="margin-top:10px;color:#555;">
+      <!-- shows selected order type -->
+    </div>
+  </div>
+
+  <!-- CAKE MENU -->
+  <section class="cake-menu" id="cakeMenu"></section>
+
+</div>
+
+<!-- CART PAGE -->
+<div id="cartPage">
+  <h2 style="margin-bottom:14px;color:#b87b7b;">Your Cart</h2>
+  <div id="cartItems"></div>
+
+  <div class="cart-footer" style="margin-top:18px;">
+    <div id="cartSummary" style="font-weight:700; font-size:18px;">Total: ₹0</div>
+    <button class="checkout-btn" onclick="checkoutCart()">Checkout / Place Orders</button>
+  </div>
+</div>
+
+<!-- ORDER / BUY MODAL -->
+<div id="cakeModal" class="modal" aria-hidden="true">
+  <div class="modal-content" role="dialog" aria-modal="true">
+    <span class="close" onclick="closeModal()">&times;</span>
+    <h3 id="selectedCake">Order</h3>
+
+    <!-- If orderType not chosen previously, show this choice -->
+    <div id="orderTypeChooser" class="small-choose" style="display:none;">
+      <div style="flex:1">
+        <label style="font-weight:600;margin-bottom:6px;">Choose:</label>
+        <div style="display:flex;gap:8px;">
+          <button onclick="selectModalOrderType('pickup')" style="padding:8px 12px;border-radius:8px;border:1px solid #ddd;cursor:pointer">Pickup</button>
+          <button onclick="selectModalOrderType('delivery')" style="padding:8px 12px;border-radius:8px;border:1px solid #ddd;cursor:pointer">Delivery (+₹80)</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- PICKUP block -->
+    <div id="pickupBlock" style="display:none;">
+      <p><strong>Pickup from:</strong> Forever Frost, opposite BVB college - Vidyanagar - Hubli</p>
+      <label>When:</label>
+      <select id="pickupTimeSelect" onchange="togglePickupSchedule(); calculateTotal();">
+        <option value="now">Up to 30 minutes</option>
+        <option value="later">Schedule for later</option>
+      </select>
+      <div id="scheduleDateTime" style="margin-top:10px; display:none;">
+        <label>Pickup Date:</label>
+        <input type="date" id="pickupDate">
+        <label>Pickup Time:</label>
+        <input type="time" id="pickupTime">
+      </div>
+    </div>
+
+    <!-- DELIVERY block -->
+    <div id="deliveryBlock" style="display:none;">
+      <label>Delivery Address:</label>
+      <input id="deliveryAddress" type="text" placeholder="Enter delivery address" oninput="calculateTotal()">
+    </div>
+
+    <label>Cake Type:</label>
+    <select id="cakeType" onchange="toggleSpecialReq(); calculateTotal();">
+      <option>Pastry</option>
+      <option>Full Cake</option>
+      <option>Customized Design</option>
+    </select>
+
+    <label>Weight (kg):</label>
+    <input id="cakeWeight" type="number" min="0.5" step="0.5" value="0.5" oninput="calculateTotal()">
+
+    <label>Quantity:</label>
+    <input id="cakeQuantity" type="number" min="1" step="1" value="1" oninput="calculateTotal()">
+
+    <div id="specialReq" style="display:none;">
+      <label>Special Requirements:</label>
+      <textarea id="specialReqText" rows="3" placeholder="Describe your custom design"></textarea>
+    </div>
+
+    <div id="orderTotal" style="margin-top:12px;font-weight:800">Total: ₹0</div>
+
+    <div class="modal-action">
+      <button onclick="placeOrder()" style="background:linear-gradient(180deg,#ffdfe1,#f4a6a6);color:#fff;padding:10px 14px;border-radius:8px;border:none;font-weight:700;cursor:pointer;">Place Order</button>
+      <button onclick="closeModal()" style="background:#efefef;padding:10px 14px;border-radius:8px;border:none;cursor:pointer;">Cancel</button>
+    </div>
+  </div>
+</div>
+
+<!-- Footer -->
+<div class="footer-wrap">
+  <footer>
+    &copy; 2025 Forever Frost. All rights reserved.
+  </footer>
+</div>
+
+<script>
+/* =========================
+   DATA and STATE
+   ========================= */
+const cakes = [
+  { name:"Chocolate Truffle", price:850, img:"../images/Chocolate Truffle.avif", desc:"Rich, smooth chocolate layers." },
+  { name:"Red Velvet", price:950, img:"../images/Red Velvet.jpg", desc:"Classic red velvet with cream cheese." },
+  { name:"Vanilla Cream", price:750, img:"../images/Vanilla Cream.jpg", desc:"Soft vanilla sponge and fresh cream." },
+  { name:"Butterscotch Bliss", price:800, img:"../images/Butterscotch Bliss.jpeg", desc:"Caramel crunch with silky frosting." },
+  { name:"Strawberry Delight", price:820, img:"../images/Strawberry Delight.avif", desc:"Fresh berries and whipped cream." },
+  { name:"Black Forest", price:780, img:"../images/Black Forest.jpeg", desc:"Chocolate sponge with cherries." },
+  { name:"White Chocolate Dream", price:880, img:"../images/89.jpg", desc:"Sweet white chocolate frosting." },
+  { name:"Blueberry Swirl", price:890, img:"../images/Blueberry Swirl.jpeg", desc:"Fresh blueberry compote inside." },
+  { name:"Coffee Crème", price:830, img:"../images/coffee.jpeg", desc:"Rich coffee mousse layers." },
+  { name:"Caramel Treat", price:870, img:"../images/Caramel Treat.jpeg", desc:"Golden caramel with buttercream." },
+  { name:"Mango Magic", price:820, img:"../images/Mango Magic.jpg", desc:"Fresh mango pulp & cream." },
+  { name:"Pineapple Classic", price:760, img:"../images/Pineapple Classic.jpg", desc:"Juicy pineapple layers & cream." }
+];
+
+// persistent storage
+let cart = JSON.parse(localStorage.getItem('cart') || '[]');
+let orderType = localStorage.getItem('orderType') || null;
+
+// modal-specific temporary order type handling
+// By default modal will persist the selection to page-level orderType.
+// For cart Buy flow we set modalPersistOrderType = false so the chooser affects only this modal.
+let modalPersistOrderType = true;
+let modalLocalOrderType = null;
+
+// modal state
+let currentCake = null;      // object for the cake being ordered
+let currentCakePrice = 0;
+
+/* =========================
+   UI RENDER
+   ========================= */
+function renderCakes(){
+  const menu = document.getElementById('cakeMenu');
+  menu.innerHTML = '';
+  cakes.forEach(cake=>{
+    const card = document.createElement('div');
+    card.className = 'cake-card';
+    card.innerHTML = `
+      <img src="${cake.img}" alt="${escapeHtml(cake.name)}" />
+      <div class="cake-info">
+        <h3>${escapeHtml(cake.name)}</h3>
+        <p>${escapeHtml(cake.desc)}</p>
+        <div class="price">₹${cake.price} / kg</div>
+      </div>
+      <div class="card-buttons">
+        <button class="buy-btn" onclick="onBuyClick('${escapeJs(cake.name)}')">Buy</button>
+        <button class="cart-btn" onclick="addToCart('${escapeJs(cake.name)}')">Add to Cart</button>
+      </div>
+    `;
+    menu.appendChild(card);
+  });
+  updateOrderChoiceHint();
+  updateCartCount();
+}
+
+function renderCartItems(){
+  const container = document.getElementById('cartItems');
+  container.innerHTML = '';
+  if (!cart.length){
+    container.innerHTML = '<p style="color:#666;margin-bottom:14px;">Your cart is empty. Add some tasty cakes!</p>';
+    document.getElementById('cartSummary').textContent = 'Total: ₹0';
+    updateCartCount();
+    return;
+  }
+
+  let grandTotal = 0;
+  cart.forEach((item, idx)=>{
+    const itemTotal = (Number(item.price || 0)) * (Number(item.weight || 1)) * (Number(item.quantity || 1)) + (item.type === 'Customized Design' ? 200 : 0);
+    grandTotal += itemTotal;
+
+    const div = document.createElement('div');
+    div.className = 'cart-item';
+    div.innerHTML = `
+      <img src="${item.img}" alt="${escapeHtml(item.name)}" />
+      <div class="cart-item-details">
+        <h4>${escapeHtml(item.name)}</h4>
+        <p>Price: ₹${item.price} / kg</p>
+        <p>Type: <strong>${escapeHtml(item.type || 'Pastry')}</strong></p>
+        <div style="display:flex;gap:8px;align-items:center;margin-top:8px;">
+          <label style="font-size:14px;color:#555">Weight (kg)</label>
+          <input class="qty-input" type="number" min="0.5" step="0.5" value="${item.weight || 1}" onchange="updateCartItemWeight(${idx}, this.value)">
+          <label style="font-size:14px;color:#555">Qty</label>
+          <input class="qty-input" type="number" min="1" step="1" value="${item.quantity || 1}" onchange="updateCartItemQty(${idx}, this.value)">
+        </div>
+        <p style="margin-top:10px;">Item total: <strong>₹${formatNumber(itemTotal)}</strong></p>
+
+        <div class="cart-controls">
+          <button class="buy-cart-btn" onclick="buyFromCart(${idx})">Buy</button>
+          <button class="remove-btn secondary" onclick="removeCartItem(${idx})">Remove</button>
+        </div>
+      </div>
+    `;
+    container.appendChild(div);
+  });
+
+  document.getElementById('cartSummary').textContent = 'Total: ₹' + formatNumber(grandTotal);
+  updateCartCount();
+}
+
+/* =========================
+   HELPERS
+   ========================= */
+function saveCart(){ localStorage.setItem('cart', JSON.stringify(cart)); updateCartCount(); }
+function updateCartCount(){ document.getElementById('cartCount').textContent = cart.length; }
+function updateOrderChoiceHint(){
+  const hint = document.getElementById('orderChoiceHint');
+  if (orderType){
+    hint.textContent = `Order type selected: ${orderType.toUpperCase()} ${orderType === 'delivery' ? '(delivery +₹80)' : ''}`;
+    document.getElementById('pickupBtn').classList.toggle('active', orderType === 'pickup');
+    document.getElementById('deliveryBtn').classList.toggle('active', orderType === 'delivery');
+  } else {
+    hint.textContent = 'Select Pickup or Delivery above (your choice will persist).';
+    document.getElementById('pickupBtn').classList.toggle('active', false);
+    document.getElementById('deliveryBtn').classList.toggle('active', false);
+  }
+}
+function formatNumber(n){ return Math.round(n*100)/100; }
+function escapeJs(s){ return (s||'').replace(/'/g,"\\'").replace(/"/g,'\\"'); }
+function escapeHtml(str){ return String(str||'').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;'); }
+
+/* =========================
+   CART OPERATIONS
+   ========================= */
+function addToCart(cakeName){
+  const cake = cakes.find(c=>c.name === cakeName);
+  if (!cake) return;
+  cart.push({
+    name: cake.name,
+    price: cake.price,
+    img: cake.img,
+    desc: cake.desc,
+    quantity: 1,
+    weight: 1,
+    type: 'Pastry'
+  });
+  saveCart();
+  renderCartItems();
+  alert(`${cakeName} added to cart`);
+}
+
+function removeCartItem(index){
+  if (index < 0 || index >= cart.length) return;
+  cart.splice(index,1);
+  saveCart();
+  renderCartItems();
+}
+
+function updateCartItemQty(index, val){
+  const q = parseInt(val) || 1;
+  cart[index].quantity = Math.max(1, q);
+  saveCart();
+  renderCartItems();
+}
+
+function updateCartItemWeight(index, val){
+  const w = parseFloat(val) || 0.5;
+  cart[index].weight = Math.max(0.5, w);
+  saveCart();
+  renderCartItems();
+}
+
+/* =========================
+   NAVIGATION (no page reload)
+   ========================= */
+function showCart(){
+  document.querySelector('.main-content').style.display = 'none';
+  document.getElementById('cartPage').style.display = 'block';
+  renderCartItems();
+}
+function showHome(){
+  document.getElementById('cartPage').style.display = 'none';
+  document.querySelector('.main-content').style.display = 'block';
+  renderCakes();
+}
+
+/* =========================
+   ORDER TYPE selection on Order page
+   ========================= */
+function selectOrderType(type){
+  orderType = type;
+  localStorage.setItem('orderType', orderType);
+  updateOrderChoiceHint();
+}
+
+/* =========================
+   BUY FLOW
+   ========================= */
+
+/* Called when clicking Buy on the product card (outside cart) */
+function onBuyClick(cakeName){
+  const cake = cakes.find(c=>c.name === cakeName);
+  if (!cake) return;
+  currentCake = { ...cake, quantity: 1, weight: 1, type: 'Pastry' };
+  currentCakePrice = cake.price;
+
+  // normal behavior: if page-level orderType exists, open directly for that type
+  // otherwise show chooser (this preserves existing outside-card behavior)
+  if (orderType){
+    // persist chooser behavior for outside: modalPersistOrderType = true
+    modalPersistOrderType = true;
+    modalLocalOrderType = null;
+    openModalForType(orderType);
+  } else {
+    modalPersistOrderType = true;
+    modalLocalOrderType = null;
+    openModalForType(null);
+  }
+}
+
+/* Called when clicking Buy from cart for a specific cart item
+   Requirement: For cart items, ALWAYS ask for pickup/delivery first and do not persist that choice globally.
+*/
+function buyFromCart(index){
+  const item = cart[index];
+  currentCake = { ...item }; // includes qty and weight
+  currentCakePrice = item.price;
+
+  // For cart Buy we force modalPersistOrderType = false so chooser affects only this modal.
+  modalPersistOrderType = false;
+  modalLocalOrderType = null;
+
+  // Always show chooser (regardless of existing page-level orderType)
+  openModalForType(null);
+}
+
+/* Opens the modal. If typeArg is 'pickup' or 'delivery' it opens that block, otherwise shows chooser */
+function openModalForType(typeArg){
+  document.getElementById('selectedCake').textContent = `Order: ${currentCake.name}`;
+  document.getElementById('cakeWeight').value = currentCake.weight || 1;
+  document.getElementById('cakeQuantity').value = currentCake.quantity || 1;
+  document.getElementById('cakeType').value = currentCake.type || 'Pastry';
+  document.getElementById('specialReqText').value = currentCake.specialReq || '';
+
+  // if typeArg provided, show the selected block (typeArg should be 'pickup' or 'delivery')
+  // else show chooser
+  document.getElementById('orderTypeChooser').style.display = typeArg ? 'none' : 'block';
+  document.getElementById('pickupBlock').style.display = 'none';
+  document.getElementById('deliveryBlock').style.display = 'none';
+
+  if (typeArg === 'pickup'){
+    document.getElementById('pickupBlock').style.display = 'block';
+  } else if (typeArg === 'delivery'){
+    document.getElementById('deliveryBlock').style.display = 'block';
+    if (currentCake.deliveryAddress) document.getElementById('deliveryAddress').value = currentCake.deliveryAddress;
+  } else {
+    // chooser visible
+  }
+
+  document.getElementById('cakeModal').style.display = 'flex';
+  calculateTotal();
+}
+
+function selectModalOrderType(t){
+  if (modalPersistOrderType){
+    orderType = t;
+    localStorage.setItem('orderType', orderType);
+    updateOrderChoiceHint();
+  } else {
+    modalLocalOrderType = t;
+  }
+
+  if (t === 'pickup'){
+    document.getElementById('orderTypeChooser').style.display = 'none';
+    document.getElementById('pickupBlock').style.display = 'block';
+    document.getElementById('deliveryBlock').style.display = 'none';
+  } else {
+    document.getElementById('orderTypeChooser').style.display = 'none';
+    document.getElementById('deliveryBlock').style.display = 'block';
+    document.getElementById('pickupBlock').style.display = 'none';
+    if (currentCake.deliveryAddress) document.getElementById('deliveryAddress').value = currentCake.deliveryAddress;
+  }
+  calculateTotal();
+}
+
+/* toggles special req UI */
+function toggleSpecialReq(){
+  const v = document.getElementById('cakeType').value;
+  document.getElementById('specialReq').style.display = (v === 'Customized Design') ? 'block' : 'none';
+}
+
+/* toggle pickup scheduling sub-block */
+function togglePickupSchedule(){
+  const s = document.getElementById('pickupTimeSelect').value;
+  document.getElementById('scheduleDateTime').style.display = (s === 'later') ? 'block' : 'none';
+}
+
+/* live total calc - uses modalLocalOrderType when modalPersistOrderType is false */
+function calculateTotal(){
+  const weight = parseFloat(document.getElementById('cakeWeight').value) || 0;
+  const quantity = parseInt(document.getElementById('cakeQuantity').value) || 1;
+  const type = document.getElementById('cakeType').value;
+
+  const effectiveOrderType = modalPersistOrderType ? orderType : (modalLocalOrderType || null);
+  const isDelivery = (effectiveOrderType === 'delivery');
+
+  let total = (currentCakePrice || 0) * weight * quantity;
+  if (type === 'Customized Design') total += 200;
+  if (isDelivery) total += 80;
+
+  document.getElementById('orderTotal').textContent = 'Total: ₹' + formatNumber(total);
+  return total;
+}
+
+/* When user clicks Place Order in modal */
+/* When user clicks Place Order in modal */
+async function placeOrder(){
+  // gather fields
+  const cakeType = document.getElementById('cakeType').value;
+  const weight = parseFloat(document.getElementById('cakeWeight').value) || 0;
+  const quantity = parseInt(document.getElementById('cakeQuantity').value) || 1;
+  const specialReq = document.getElementById('specialReqText').value || '';
+  const pickupDate = document.getElementById('pickupDate').value || '';
+  const pickupTime = document.getElementById('pickupTime').value || '';
+  const deliveryAddress = document.getElementById('deliveryAddress').value || '';
+
+  const effectiveOrderType = modalPersistOrderType ? orderType : (modalLocalOrderType || null);
+  const totalCost = calculateTotal();
+
+  // validation
+  if (!currentCake) { alert('No cake selected'); return; }
+  if (!effectiveOrderType) { alert('Please choose Pickup or Delivery'); return; }
+  if (effectiveOrderType === 'delivery' && !deliveryAddress.trim()) { alert('Please enter delivery address'); return; }
+  if (weight <= 0) { alert('Please enter valid weight'); return; }
+
+  // Build order payload
+  const orderPayload = {
+    cakeName: currentCake.name,
+    cakeType,
+    weight,
+    quantity,
+    specialReq,
+    orderType: effectiveOrderType,
+    pickupDate,
+    pickupTime,
+    deliveryAddress,
+    price: currentCakePrice
+  };
+
+try {
+    const resp = await fetch('https://cc-final.onrender.com/order', { // replaced localhost with deployed URL
+        method: 'POST',
+        headers: {'Content-Type':'application/json'},
+        body: JSON.stringify(orderPayload)
+    });
+
+    let json = {};
+    if (!resp.ok) {
+      json = await resp.json().catch(() => ({ error: 'unknown' }));
+      console.error('Order save failed', json);
+      alert('Order could not be saved to server. Placing locally. Total: ₹' + totalCost);
+    } else {
+      json = await resp.json().catch(() => ({}));
+      alert('Order placed successfully! Total: ₹' + (json.totalCost || totalCost));
+    }
+  } catch (e) {
+    console.warn('fetch /order failed', e);
+    alert('Order placed locally (server unreachable). Total: ₹' + totalCost);
+  }
+
+  // Remove this cart item if it exists (best-effort by name + price)
+  const cartIndex = cart.findIndex(it => it.name === currentCake.name && Math.abs((it.price || 0) - (currentCakePrice || 0)) < 1);
+  if (cartIndex !== -1) {
+    cart.splice(cartIndex, 1);
+    saveCart();
+    renderCartItems();
+  }
+
+  // Reset modal-specific flags
+  modalPersistOrderType = true;
+  modalLocalOrderType = null;
+
+  // Close modal
+  closeModal();
+}
+
+function closeModal() {
+  const modal = document.getElementById('cakeModal');
+  if (modal) modal.style.display = 'none';
+
+  // Reset modal-specific flags for next open
+  modalPersistOrderType = true;
+  modalLocalOrderType = null;
+
+  calculateTotal();
+}
+
+/* Exposed checkout for entire cart */
+async function checkoutCart(){
+  if (!cart.length) { alert('Cart is empty!'); return; }
+
+  // if orderType not set on page, ask user to select it on the order bar
+  if (!orderType){
+    if (!confirm('You have not chosen Pickup or Delivery. Please select from the order bar at top.')) return;
+    showHome();
+    return;
+  }
+
+  let grand = 0;
+  for (const item of cart){
+    const itemTotal = ((item.price || 0) * (item.weight || 1) * (item.quantity || 1)) 
+                      + (item.type === 'Customized Design' ? 200 : 0) 
+                      + (orderType === 'delivery' ? 80 : 0);
+    grand += itemTotal;
+
+    const payload = {
+      cakeName: item.name,
+      cakeType: item.type || 'Pastry',
+      weight: item.weight || 1,
+      quantity: item.quantity || 1,
+      specialReq: item.specialReq || '',
+      orderType,
+      pickupDate: '',
+      pickupTime: '',
+      deliveryAddress: (orderType === 'delivery' ? (item.deliveryAddress || '') : ''),
+      price: item.price
+    };
+
+    try {
+    await fetch('https://cc-final.onrender.com/order', { // replaced localhost with deployed URL
+        method: 'POST',
+        headers: {'Content-Type':'application/json'},
+        body: JSON.stringify(payload)
+    });
+    } catch (e) {
+      console.warn('Order send failed for', item.name, e);
+    }
+  } // <-- closing for-loop
+
+  // Actions after all items processed
+  alert('Checkout complete! Total: ₹' + formatNumber(grand));
+  cart = [];
+  saveCart();
+  renderCartItems();
+  showHome();
+}
+
+/* =========================
+   Initialization
+   ========================= */
+function init(){
+  cart = JSON.parse(localStorage.getItem('cart') || '[]');
+  orderType = localStorage.getItem('orderType') || null;
+  modalPersistOrderType = true;
+  modalLocalOrderType = null;
+  updateOrderChoiceHint();
+  renderCakes();
+  renderCartItems();
+}
+init();
+
+</script>
+</body>
+</html>

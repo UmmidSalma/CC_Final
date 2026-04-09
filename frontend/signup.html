@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Sign Up</title>
+<style>
+
+    body {
+    font-family: 'Georgia', serif;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    margin: 0;
+    background: #fff; /* white background */
+}
+
+.container {
+    text-align: center;
+    width: 350px; /* slightly smaller for better alignment */
+    padding: 40px 30px;
+    border-radius: 12px;
+    background: #fff;
+    box-shadow: 0 10px 25px rgba(0,0,0,0.1);
+    display: flex;
+    flex-direction: column;
+    align-items: center; /* center input boxes */
+    gap: 15px; /* space between elements */
+}
+
+h1 {
+    font-size: 36px;
+    font-weight: 600;
+    color: #d86d99;
+    margin-bottom: 10px;
+}
+
+p {
+    font-size: 15px;
+    color: #777;
+    margin-bottom: 20px;
+}
+
+a {
+    text-decoration: none;
+    color: #d86d99;
+    font-weight: bold;
+}
+
+input {
+    width: 100%;
+    padding: 12px;
+    border-radius: 6px;
+    border: 1px solid #ddd;
+    font-size: 15px;
+    transition: border 0.3s ease, box-shadow 0.3s ease;
+}
+
+input:focus {
+    border-color: #d86d99;
+    box-shadow: 0 0 5px rgba(216,109,153,0.4);
+    outline: none;
+}
+
+.btn {
+    width: 100%;
+    padding: 14px;
+    border: none;
+    border-radius: 8px;
+    font-size: 16px;
+    font-weight: bold;
+    cursor: pointer;
+    color: #fff;
+    background: linear-gradient(45deg,#d86d99,#f9a6c0);
+    transition: background 0.3s ease, transform 0.2s ease;
+}
+
+.btn:hover {
+    background: linear-gradient(45deg,#f9a6c0,#d86d99);
+    transform: translateY(-2px);
+}
+
+.message {
+    margin-top: 10px;
+    font-weight: bold;
+}
+
+.error {
+    color: #d86d99;
+}
+
+.success {
+    color: #4caf50;
+}
+
+</style>
+</head>
+<body>
+<div class="container">
+<h1>Sign Up</h1>
+<p>Already a member? <a href="login.html">Log In</a></p>
+<input id="name" type="text" placeholder="Full Name">
+<input id="email" type="email" placeholder="Email">
+<input id="password" type="password" placeholder="Password">
+<button class="btn" onclick="signup()">Sign Up</button>
+<p id="message" class="message"></p>
+</div>
+
+<script>
+function signup() {
+    const name = document.getElementById("name").value;
+    const email = document.getElementById("email").value;
+    const password = document.getElementById("password").value;
+    const messageEl = document.getElementById("message");
+
+    messageEl.textContent = "";
+    messageEl.className = "message";
+
+    if (!name || !email || !password) {
+        messageEl.textContent = "Please fill all fields";
+        messageEl.classList.add("error");
+        return;
+    }
+fetch("https://cc-final.onrender.com/signup", {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify({ name, email, password })
+})
+    .then(async res => {
+        const data = await res.json();
+        if (!res.ok) {
+            // Show exact error from server
+            messageEl.textContent = data.error;
+            messageEl.classList.add("error");
+        } else {
+            messageEl.textContent = data.message;
+            messageEl.classList.add("success");
+            setTimeout(() => { window.location.href = "login.html"; }, 1500);
+        }
+    })
+    .catch(err => {
+        messageEl.textContent = "Error occurred, try again.";
+        messageEl.classList.add("error");
+        console.error("Fetch Signup Error:", err);
+    });
+}
+</script>
+
+</body>
+</html>

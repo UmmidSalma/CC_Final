@@ -1,0 +1,263 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Our Cakes | Forever Frost by Pratibha M.P</title>
+<style>
+/* BASE STYLES */
+* { box-sizing: border-box; margin: 0; padding: 0; }
+body { 
+  font-family: "Times New Roman", serif; 
+  background-color: #fff; 
+  color: #333; 
+  line-height: 1.6; 
+  scroll-behavior: smooth; 
+}
+.container { width: 100%; max-width: 1400px; margin: 0 auto; padding: 0 20px; }
+
+/* HEADER */
+header { 
+  position: fixed; 
+  top: 0; 
+  left: 50%; 
+  transform: translateX(-50%); 
+  width: 100%; 
+  max-width: 1400px; 
+  background-color: #fff; 
+  display: flex; 
+  justify-content: space-between; 
+  align-items: center; 
+  padding: 20px 1cm; 
+  border-bottom: 1px solid #eee; 
+  z-index: 1000; 
+}
+.logo { display: flex; align-items: center; gap: 20px; }
+.logo-box { background-color: #d4b2b2; color: white; font-size: 56px; padding: 10px 25px; font-weight: bold; }
+.logo-text { font-size: 22px; font-weight: bold; line-height: 1.4; }
+nav { display: flex; gap: 25px; }
+nav a { text-decoration: none; color: #000; font-size: 18px; font-weight: 600; letter-spacing: 0.5px; }
+nav a:hover { color: #d4b2b2; }
+
+/* MAIN CONTENT */
+.main-content { margin-top: 140px; padding-bottom: 3cm; }
+
+/* MASONRY GRID */
+.cakes-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+  grid-auto-rows: 220px;
+  grid-gap: 12px;
+  grid-auto-flow: dense;
+}
+
+/* IMAGE CARD */
+.cake-card {
+  position: relative;
+  overflow: hidden;
+  border-radius: 12px;
+}
+.cake-card img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+  transition: transform 0.5s, opacity 0.5s;
+  opacity: 0;
+  transform: scale(0.95);
+}
+.cake-card img.visible {
+  opacity: 1;
+  transform: scale(1);
+}
+
+/* Different Sizes */
+.big { grid-row: span 3; grid-column: span 3; }
+.medium { grid-row: span 2; grid-column: span 2; }
+.small { grid-row: span 1; grid-column: span 1; }
+
+/* REVIEW POPUP */
+.review-popup {
+  position: absolute;
+  background-color: rgba(255,255,255,0.9);
+  padding: 0.6rem 1rem;
+  border-radius: 12px;
+  max-width: 220px;
+  box-shadow: 0 8px 20px rgba(0,0,0,0.2);
+  opacity: 0;
+  transition: all 0.5s ease-out;
+}
+.review-popup.visible { opacity: 1; }
+.review-top { top: 10px; left: 10px; }
+.review-right { top: 20%; right: 10px; }
+.review-left { bottom: 10px; left: 10px; }
+.review-popup h4 { margin: 0 0 0.2rem 0; font-size: 1rem; color: #b87b7b; }
+.review-popup p { margin: 0; font-size: 0.85rem; font-style: italic; color: #555; }
+
+/* RESPONSIVE */
+@media (max-width: 900px) {
+  .cakes-grid { grid-template-columns: repeat(2, 1fr); grid-auto-rows: 180px; }
+  .big, .medium, .small { grid-column: span 2 !important; grid-row: span 2 !important; }
+  .review-right, .review-left { display: none; }
+}
+/* FOOTER */
+footer { text-align: center; padding: 25px; background-color: #f7eaea; color: #555; font-size: 16px; border-radius: 6px; margin-bottom: 1cm; }
+
+/* CHAT */
+.chat-button { position: fixed; bottom: 25px; right: 25px; background-color: #d4b2b2; color: #fff; border: none; padding: 12px 20px; font-size: 17px; cursor: pointer; box-shadow: 0 4px 10px rgba(0,0,0,0.2); z-index: 1000; border-radius: 6px; }
+.chat-button:hover { background-color: #c29898; }
+.chat-box { position: fixed; bottom: 90px; right: 25px; width: 300px; background-color: #fff; border: 1px solid #ccc; box-shadow: 0 4px 15px rgba(0,0,0,0.2); display: none; flex-direction: column; overflow: hidden; z-index: 1000; border-radius: 6px; }
+.chat-header { background-color: #d4b2b2; color: white; padding: 10px; text-align: center; font-weight: bold; }
+.chat-body { padding: 10px; flex: 1; height: 200px; overflow-y: auto; }
+.chat-body p { background-color: #f0f0f0; padding: 8px 12px; border-radius: 10px; margin: 8px 0; font-size: 14px; }
+.chat-input { display: flex; border-top: 1px solid #ccc; }
+.chat-input input { flex: 1; border: none; padding: 10px; font-size: 14px; }
+.chat-input button { background-color: #d4b2b2; color: white; border: none; padding: 10px 15px; cursor: pointer; }
+/* RESPONSIVE */
+@media (max-width: 1024px) { 
+  .slide img { height: 300px; width: 250px; }
+}
+@media (max-width: 768px) { 
+  .intro { flex-direction: column; } 
+  .intro-text h2 { font-size: 34px; } 
+  .intro-text p { font-size: 18px; } 
+  nav a { font-size: 16px; } 
+  .slide img { height: 250px; width: 200px; } 
+  .slide { margin-right: 15px; }
+}
+.intro-text { flex: 2; background-color: #f7eaea; padding: 1cm; display: flex; flex-direction: column; justify-content: center; border-radius: 6px; }
+</style>
+</head>
+<body>
+
+<header>
+  <div class="logo">
+    <div class="logo-box">2F</div>
+    <div class="logo-text">
+      <strong>Forever Frost</strong><br>
+      By Ummid & Pratibha
+    </div>
+  </div>
+<nav>
+    <a href="index.html">Home</a>
+    <a href="about.html">About</a>
+    <a href="ourcakes.html">Our Cakes</a>
+    <a href="online.html">Order Online</a>
+    <a onclick="showCart()">Cart (<span id="cartCount">0</span>)</a>
+    <a href="login.html">Log In</a>
+  </nav>
+</header>
+
+<div class="container main-content">
+  <section class="cakes-grid">
+    <!-- 14 Images with different sizes -->
+    <div class="cake-card big">
+      <img src="../images/Chocolate Truffle.avif" alt="Chocolate Truffle">
+      <div class="review-popup review-top">
+        <h4>Sarah J.</h4>
+        <p>"Rich, smooth chocolate layers. Absolutely loved it!"</p>
+      </div>
+    </div>
+    <div class="cake-card medium">
+      <img src="../images/Red Velvet.jpg" alt="Red Velvet">
+      <div class="review-popup review-right">
+        <h4>Ramesh K.</h4>
+        <p>"Red Velvet is divine! Everyone adored it."</p>
+      </div>
+    </div>
+    <div class="cake-card small">
+      <img src="../images/Vanilla Cream.jpg" alt="Vanilla Cream">
+      <div class="review-popup review-left">
+        <h4>Priya S.</h4>
+        <p>"Soft, fluffy, and flavorful. A perfect treat!"</p>
+      </div>
+    </div>
+    <div class="cake-card medium">
+      <img src="../images/Butterscotch Bliss.jpeg" alt="Butterscotch Bliss">
+      <div class="review-popup review-right">
+        <h4>Vikram L.</h4>
+        <p>"Caramel heaven! Loved every bite."</p>
+      </div>
+    </div>
+    <div class="cake-card big">
+      <img src="../images/Strawberry Delight.avif" alt="Strawberry Delight">
+      <div class="review-popup review-left">
+        <h4>Neha P.</h4>
+        <p>"Fresh berries with whipped cream – delightful!"</p>
+      </div>
+    </div>
+    <div class="cake-card small">
+      <img src="../images/Black Forest.jpeg" alt="Black Forest">
+      <div class="review-popup review-top">
+        <h4>Arjun M.</h4>
+        <p>"Chocolate sponge with cherries – classic perfection."</p>
+      </div>
+    </div>
+    <div class="cake-card medium">
+      <img src="../images/5.jpg" alt="White Chocolate Dream">
+      <div class="review-popup review-right">
+        <h4>Alia R.</h4>
+        <p>"Sweet white chocolate frosting – heavenly!"</p>
+      </div>
+    </div>
+     <div class="cake-card small">
+      <img src="../images/Pineapple Classic.jpg" alt="Pineapple Classic">
+      <div class="review-popup review-top">
+        <h4>Vikram S.</h4>
+        <p>"Juicy pineapple layers & cream – amazing!"</p>
+      </div>
+    </div>
+    <div class="cake-card medium">
+      <img src="../images/88.jpg" alt="Coffee Creme">
+      <div class="review-popup review-top">
+        <h4>Kavita D.</h4>
+        <p>"Rich coffee mousse layers – excellent!"</p>
+      </div>
+    </div>
+    <div class="cake-card big">
+      <img src="../images/99.jpg" alt="Caramel Treat">
+      <div class="review-popup review-left">
+        <h4>Samir P.</h4>
+        <p>"Golden caramel with buttercream – wow!"</p>
+      </div>
+    </div>
+    <div class="cake-card medium">
+      <img src="../images/Mango Magic.jpg" alt="Mango Magic">
+      <div class="review-popup review-right">
+        <h4>Neha V.</h4>
+        <p>"Fresh mango pulp & cream – tropical delight!"</p>
+      </div>
+    </div>
+   
+    
+      
+  </section>
+</div>
+<section>
+</break>
+<div class="intro-text">
+  <footer>
+    © 2025 Forever Frost Cakes by Pratibha M.P | Designed with ❤️
+  </footer>
+</div>
+</section>
+
+<script>
+const cakeCards = document.querySelectorAll('.cake-card');
+const observer = new IntersectionObserver(entries => {
+  entries.forEach(entry => {
+    if(entry.isIntersecting){
+      const img = entry.target.querySelector('img');
+      const review = entry.target.querySelector('.review-popup');
+      img.classList.add('visible');
+      setTimeout(() => review.classList.add('visible'), 400);
+      observer.unobserve(entry.target);
+    }
+  });
+}, { threshold: 0.3 });
+
+cakeCards.forEach(card => observer.observe(card));
+</script>
+
+</body>
+</html>

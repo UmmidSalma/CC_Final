@@ -1,0 +1,198 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Cakes by Pratibha M.P</title>
+<style>
+/* BASE STYLES */
+* { box-sizing: border-box; margin: 0; padding: 0; }
+body { font-family: "Times New Roman", serif; background-color: #fff; color: #333; line-height: 1.6; scroll-behavior: smooth; }
+.container { width: 100%; max-width: 1400px; margin: 0 auto; padding: 0 1cm; }
+
+/* HEADER */
+header { position: fixed; top: 0; left: 50%; transform: translateX(-50%); width: 100%; max-width: 1400px; background-color: #fff; display: flex; justify-content: space-between; align-items: center; padding: 20px 1cm; border-bottom: 1px solid #eee; z-index: 1000; }
+.logo { display: flex; align-items: center; gap: 20px; }
+.logo-box { background-color: #d4b2b2; color: white; font-size: 56px; padding: 10px 25px; font-weight: bold; }
+.logo-text { font-size: 22px; font-weight: bold; line-height: 1.4; }
+nav { display: flex; gap: 25px; }
+nav a { text-decoration: none; color: #000; font-size: 18px; font-weight: 600; letter-spacing: 0.5px; }
+nav a:hover { color: #d4b2b2; }
+
+/* MAIN CONTENT */
+.main-content { margin-top: 140px; }
+
+/* HERO */
+.hero {
+    background: url("/images/cake1.avif") center/cover no-repeat;
+    height: 85vh;
+    border-radius: 6px;
+    margin-bottom: 1cm;
+}
+/* INTRO */
+.intro { display: flex; gap: 1cm; min-height: 40vh; margin-bottom: 1cm; }
+.intro-text { flex: 2; background-color: #f7eaea; padding: 1cm; display: flex; flex-direction: column; justify-content: center; border-radius: 6px; }
+.intro-image { flex: 1; border-radius: 6px; overflow: hidden; }
+.intro-image img { width: 100%; height: 100%; object-fit: cover; display: block; border-radius: 6px; }
+.intro-text h2 { font-size: 42px; margin-bottom: 15px; }
+.intro-text p { font-size: 19px; line-height: 1.6; text-align: justify; }
+
+/* SLIDESHOW */
+.slideshow-container {
+  width: 100%;
+  overflow: hidden;
+  margin: 1cm 0 2cm 0; /* top 0, right 0, bottom 2cm, left 0 */
+  position: relative;
+  cursor: grab;
+}
+.slides-wrapper {
+  display: flex;
+  transition: transform 0.3s ease;
+  overflow-x: scroll;
+  -webkit-overflow-scrolling: touch;
+  scroll-behavior: smooth;
+
+  /* hide scrollbar */
+  scrollbar-width: none; /* Firefox */
+}
+.slides-wrapper::-webkit-scrollbar {
+  display: none; /* Chrome, Safari */
+}
+
+  .slide {
+  flex: 0 0 auto;
+  width: 300px; /* image width */
+  margin-right: 30px; /* increased space between slides */
+}
+
+.slide img {
+  width: 100%;
+  height: 300px; /* larger height */
+  object-fit: cover;
+  border-radius: 6px;
+}
+
+
+/* FOOTER */
+footer { text-align: center; padding: 25px; background-color: #f7eaea; color: #555; font-size: 16px; border-radius: 6px; margin-bottom: 1cm; }
+
+/* CHAT */
+.chat-button { position: fixed; bottom: 25px; right: 25px; background-color: #d4b2b2; color: #fff; border: none; padding: 12px 20px; font-size: 17px; cursor: pointer; box-shadow: 0 4px 10px rgba(0,0,0,0.2); z-index: 1000; border-radius: 6px; }
+.chat-button:hover { background-color: #c29898; }
+.chat-box { position: fixed; bottom: 90px; right: 25px; width: 300px; background-color: #fff; border: 1px solid #ccc; box-shadow: 0 4px 15px rgba(0,0,0,0.2); display: none; flex-direction: column; overflow: hidden; z-index: 1000; border-radius: 6px; }
+.chat-header { background-color: #d4b2b2; color: white; padding: 10px; text-align: center; font-weight: bold; }
+.chat-body { padding: 10px; flex: 1; height: 200px; overflow-y: auto; }
+.chat-body p { background-color: #f0f0f0; padding: 8px 12px; border-radius: 10px; margin: 8px 0; font-size: 14px; }
+.chat-input { display: flex; border-top: 1px solid #ccc; }
+.chat-input input { flex: 1; border: none; padding: 10px; font-size: 14px; }
+.chat-input button { background-color: #d4b2b2; color: white; border: none; padding: 10px 15px; cursor: pointer; }
+
+/* RESPONSIVE */
+@media (max-width: 1024px) { 
+  .slide img { height: 300px; width: 250px; }
+}
+@media (max-width: 768px) { 
+  .intro { flex-direction: column; } 
+  .intro-text h2 { font-size: 34px; } 
+  .intro-text p { font-size: 18px; } 
+  nav a { font-size: 16px; } 
+  .slide img { height: 250px; width: 200px; } 
+  .slide { margin-right: 15px; }
+}
+</style>
+</head>
+<body>
+
+<header>
+  <div class="logo">
+    <div class="logo-box">2F</div>
+    <div class="logo-text">
+      <strong>Forever Frost</strong><br>
+      By Ummid & Pratibha
+    </div>
+  </div>
+  <nav>
+    <a href="index.html">Home</a>
+    <a href="about.html">About</a>
+    <a href="ourcakes.html">Our Cakes</a>
+    <a href="online.html">Order Online</a>
+    <a onclick="showCart()">Cart (<span id="cartCount">0</span>)</a>
+    <a href="login.html">Log In</a>
+  </nav>
+</header>
+
+<div class="container main-content">
+  <div class="hero"></div>
+
+  <section class="intro">
+    <div class="intro-text">
+      <h2>Forever Frosted</h2>
+      <p alignment="justify">Forever Frosted is where every cake tells a story. We craft each creation with passion, precision, and love, making every celebration unforgettable. From timeless classics to bespoke designs, our cakes are made with the finest ingredients and decorated with artistry that delights both the eyes and the taste buds. At Forever Frosted, your sweetest moments deserve a masterpiece.</p>
+    </div>
+    <div class="intro-image">
+      <img src="../images/cake2.avif" alt="Cake Slice">
+    </div>
+  </section>
+   <center>
+    <h1>Our gallery</h1></center>
+    <break>
+    </break>
+  <section class="slideshow-container">
+   
+ 
+    <div class="slides-wrapper" id="slidesWrapper">
+      <div class="slide"><img src="../images/1.jpg" alt="Slide 1"></div>
+      <div class="slide"><img src="../images/2.jpg" alt="Slide 2"></div>
+      <div class="slide"><img src="../images/3.jpg" alt="Slide 3"></div>
+      <div class="slide"><img src="../images/4.jpg" alt="Slide 4"></div>
+      <div class="slide"><img src="../images/5.jpg" alt="Slide 5"></div>
+      <div class="slide"><img src="../images/6.jpg" alt="Slide 6"></div>
+      <div class="slide"><img src="../images/7.jpg" alt="Slide 7"></div>
+      <div class="slide"><img src="../images/8.jpg" alt="Slide 8"></div>
+    </div>
+  </section>
+
+
+  <footer>
+    © 2025 Forever Frost Cakes by Pratibha M.P | Designed with ❤️
+  </footer>
+</div>
+
+
+
+<script>
+
+
+// SLIDESHOW
+const slidesWrapper = document.getElementById("slidesWrapper");
+let isDragging = false, startPos = 0, currentTranslate = 0, prevTranslate = 0;
+
+slidesWrapper.addEventListener('mousedown', dragStart);
+slidesWrapper.addEventListener('mouseup', dragEnd);
+slidesWrapper.addEventListener('mouseleave', dragEnd);
+slidesWrapper.addEventListener('mousemove', dragAction);
+slidesWrapper.addEventListener('touchstart', dragStart, {passive:false});
+slidesWrapper.addEventListener('touchend', dragEnd);
+slidesWrapper.addEventListener('touchmove', dragAction, {passive:false});
+
+function dragStart(e){
+  isDragging = true;
+  startPos = getX(e);
+  slidesWrapper.style.cursor = "grabbing";
+}
+function dragAction(e){
+  if(!isDragging) return;
+  const currentPosition = getX(e);
+  const dx = currentPosition - startPos;
+  slidesWrapper.scrollLeft -= dx;
+  startPos = currentPosition;
+}
+function dragEnd(){
+  isDragging = false;
+  slidesWrapper.style.cursor = "grab";
+}
+function getX(e){ return e.type.includes("mouse") ? e.clientX : e.touches[0].clientX; }
+</script>
+
+</body>
+</html>
